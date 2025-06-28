@@ -27,8 +27,8 @@ exports.handler = async (event, context) => {
 
   try {
     // Check if nodemailer is available
-    if (!nodemailer || typeof nodemailer.createTransporter !== 'function') {
-      console.error('Nodemailer not available or createTransporter is not a function')
+    if (!nodemailer || typeof nodemailer.createTransport !== 'function') {
+      console.error('Nodemailer not available or createTransport is not a function')
       return {
         statusCode: 500,
         headers,
@@ -76,7 +76,7 @@ exports.handler = async (event, context) => {
     console.log('Creating SMTP transporter...')
     
     // Create SMTP transporter with more robust configuration
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'hardikcp5@gmail.com',
