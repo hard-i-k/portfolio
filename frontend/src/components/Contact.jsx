@@ -44,10 +44,10 @@ const Contact = () => {
     setSubmitError('')
     
     try {
-      // Send to backend API
-      const apiUrl =  const apiUrl = import.meta.env.VITE_API_URL || '/.netlify/functions/contact-simple'
+      // Send to Netlify function
+      const apiUrl = '/.netlify/functions/contact'
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/contact`, {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

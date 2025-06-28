@@ -1,0 +1,23 @@
+[build]
+  publish = "frontend/dist"
+  command = "cd frontend && npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Functions configuration
+[functions]
+  directory = "frontend/netlify/functions"
+
+# Redirects for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables for Netlify functions
+[context.production.environment]
+  GMAIL_USER = "hardikcp59@gmail.com"
+  
+[context.deploy-preview.environment]
+  GMAIL_USER = "hardikcp59@gmail.com"
