@@ -101,6 +101,7 @@ app.use(cors({
     'http://127.0.0.1:3000',
     'http://localhost:4173',  // Vite preview
     'http://127.0.0.1:4173',
+    'https://hardik-kannojia.netlify.app',  // Your Netlify URL
     process.env.FRONTEND_URL
   ].filter(Boolean),
   credentials: true,
