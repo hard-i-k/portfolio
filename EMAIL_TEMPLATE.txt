@@ -1,0 +1,20 @@
+Subject: 🚀 New Portfolio Contact: {{subject}}
+
+Hello Hardik,
+
+You have received a new message from your portfolio website!
+
+👤 **From:** {{from_name}}
+📧 **Email:** {{from_email}}
+📝 **Subject:** {{subject}}
+
+💬 **Message:**
+{{message}}
+
+---
+📅 Sent: {{current_date}}
+🌐 Source: Portfolio Contact Form
+💻 Reply directly to: {{reply_to}}
+
+Best regards,
+Your Portfolio Website
