@@ -26,7 +26,20 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { name, email, subject, message } = JSON.parse(event.body)
+    // Parse request body
+    let parsedBody
+    try {
+      parsedBody = JSON.parse(event.body)
+    } catch (parseError) {
+      console.error('JSON parsing error:', parseError)
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ success: false, message: 'Invalid JSON format' })
+      }
+    }
+
+    const { name, email, subject, message } = parsedBody
 
     // Validation
     if (!name || !email || !subject || !message) {
@@ -47,19 +60,34 @@ exports.handler = async (event, context) => {
       }
     }
 
-    // Create SMTP transporter with environment variables for security
+    console.log('Creating SMTP transporter...')
+    
+    // Create SMTP transporter with more robust configuration
     const transporter = nodemailer.createTransporter({
       service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USER || 'hardikcp5@gmail.com',
-        pass: process.env.GMAIL_APP_PASSWORD || 'byjh tbif gxgs hvru'
+        user: 'hardikcp5@gmail.com',
+        pass: 'byjh tbif gxgs hvru'
+      },
+      tls: {
+        rejectUnauthorized: false
       }
     })
 
-    // Test the connection first
+    // Test the connection with timeout
     console.log('Testing SMTP connection...')
-    await transporter.verify()
-    console.log('SMTP connection successful!')
+    try {
+      await Promise.race([
+        transporter.verify(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Connection timeout')), 10000)
+        )
+      ])
+      console.log('SMTP connection successful!')
+    } catch (verifyError) {
+      console.error('SMTP verification failed:', verifyError)
+      throw new Error('Email service temporarily unavailable. Please try again later.')
+    }
 
     // Email template
     const emailTemplate = `
@@ -110,18 +138,7 @@ exports.handler = async (event, context) => {
       </html>
     `
 
-    // Send email
-    console.log('Sending email...')
-    await transporter.sendMail({
-      from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
-      to: 'hardikcp5@gmail.com',
-      subject: `Portfolio Contact: ${subject}`,
-      html: emailTemplate,
-      replyTo: email
-    })
-    console.log('Email sent successfully!')
-
-    // Send confirmation email to sender
+    // Confirmation email template
     const confirmationTemplate = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #667eea;">Thank you for your message, ${name}!</h2>
@@ -136,17 +153,45 @@ exports.handler = async (event, context) => {
       </div>
     `
 
+    // Send email with timeout
+    console.log('Sending email...')
+    try {
+      const emailResult = await Promise.race([
+        transporter.sendMail({
+          from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
+          to: 'hardikcp5@gmail.com',
+          subject: `Portfolio Contact: ${subject}`,
+          html: emailTemplate,
+          replyTo: email
+        }),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Email send timeout')), 15000)
+        )
+      ])
+      console.log('Email sent successfully!', emailResult.messageId)
+    } catch (emailError) {
+      console.error('Failed to send main email:', emailError)
+      throw emailError
+    }
+
+    // Send confirmation email to sender (optional, non-blocking)
     try {
       console.log('Sending confirmation email...')
-      await transporter.sendMail({
-        from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
-        to: email,
-        subject: 'Thank you for contacting me!',
-        html: confirmationTemplate
-      })
+      await Promise.race([
+        transporter.sendMail({
+          from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
+          to: email,
+          subject: 'Thank you for contacting me!',
+          html: confirmationTemplate
+        }),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Confirmation email timeout')), 10000)
+        )
+      ])
       console.log('Confirmation email sent!')
     } catch (confirmError) {
       console.log('Confirmation email failed (non-critical):', confirmError.message)
+      // Don't throw here, main email was successful
     }
 
     return {
@@ -163,27 +208,36 @@ exports.handler = async (event, context) => {
       message: error.message,
       code: error.code,
       command: error.command,
-      stack: error.stack
+      stack: error.stack,
+      timestamp: new Date().toISOString()
     })
     
     let errorMessage = 'Failed to send message. Please try again later.'
+    let statusCode = 500
     
-    // Specific error messages
-    if (error.code === 'EAUTH') {
-      errorMessage = 'Email authentication failed. Please contact the site administrator.'
-    } else if (error.code === 'ECONNECTION') {
-      errorMessage = 'Could not connect to email server. Please try again later.'
-    } else if (error.message.includes('Invalid login')) {
-      errorMessage = 'Email service configuration error. Please contact the site administrator.'
+    // Specific error messages with better categorization
+    if (error.code === 'EAUTH' || error.message.includes('Invalid login')) {
+      errorMessage = 'Email authentication failed. Please contact me directly at hardikcp5@gmail.com'
+      statusCode = 503
+    } else if (error.code === 'ECONNECTION' || error.message.includes('timeout')) {
+      errorMessage = 'Email service temporarily unavailable. Please try again in a few minutes.'
+      statusCode = 503
+    } else if (error.message.includes('Invalid JSON')) {
+      errorMessage = 'Invalid request format. Please refresh the page and try again.'
+      statusCode = 400
+    } else if (error.message.includes('Email service temporarily unavailable')) {
+      errorMessage = error.message
+      statusCode = 503
     }
     
     return {
-      statusCode: 500,
+      statusCode: statusCode,
       headers,
       body: JSON.stringify({
         success: false,
         message: errorMessage,
-        debug: process.env.NODE_ENV === 'development' ? error.message : undefined
+        error_code: error.code || 'UNKNOWN',
+        timestamp: new Date().toISOString()
       })
     }
   }
