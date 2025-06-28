@@ -108,8 +108,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      value: "+91 9510705002",
-      link: "tel:+919510705002",
+      value: "+91 8273337228",
+      link: "tel:+918273337228",
       color: "from-green-500 to-emerald-500"
     },
     {
