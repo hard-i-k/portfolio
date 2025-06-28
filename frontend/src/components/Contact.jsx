@@ -44,8 +44,8 @@ const Contact = () => {
     setSubmitError('')
     
     try {
-      // Send to Netlify function (using log version for reliability)
-      const apiUrl = '/.netlify/functions/contact-log'
+      // Send to Netlify function
+      const apiUrl = '/.netlify/functions/contact'
 
       const response = await fetch(apiUrl, {
         method: 'POST',

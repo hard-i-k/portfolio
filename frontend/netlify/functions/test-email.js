@@ -27,10 +27,10 @@ exports.handler = async (event, context) => {
 
   try {
     // Check if nodemailer is available
-    if (!nodemailer || typeof nodemailer.createTransporter !== 'function') {
+    if (!nodemailer || typeof nodemailer.createTransport !== 'function') {
       console.error('Nodemailer module issue:', {
         nodemailerExists: !!nodemailer,
-        createTransporterType: typeof (nodemailer && nodemailer.createTransporter),
+        createTransportType: typeof (nodemailer && nodemailer.createTransport),
         nodemailerKeys: nodemailer ? Object.keys(nodemailer) : 'undefined'
       })
       
@@ -40,12 +40,12 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({
           success: false,
           message: 'Nodemailer dependency not available',
-          error: 'nodemailer.createTransporter is not a function',
+          error: 'nodemailer.createTransport is not a function',
           details: {
             timestamp: new Date().toISOString(),
             errorType: 'TypeError',
             nodemailerAvailable: !!nodemailer,
-            createTransporterType: typeof (nodemailer && nodemailer.createTransporter)
+            createTransportType: typeof (nodemailer && nodemailer.createTransport)
           }
         })
       }
