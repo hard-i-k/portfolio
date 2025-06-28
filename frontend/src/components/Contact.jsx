@@ -45,7 +45,8 @@ const Contact = () => {
     
     try {
       // Send to backend API
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      const apiUrl =  const apiUrl = import.meta.env.VITE_API_URL || '/.netlify/functions/contact-simple'
+
       const response = await fetch(`${import.meta.env.VITE_API_URL}/contact`, {
         method: 'POST',
         headers: {
