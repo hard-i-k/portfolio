@@ -1,13 +1,14 @@
 [build]
-  publish = "frontend/dist"
-  command = "cd frontend && npm run build"
+  base = "frontend"
+  publish = "dist"
+  command = "npm install && npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
 
 # Functions configuration
 [functions]
-  directory = "frontend/netlify/functions"
+  directory = "netlify/functions"
 
 # Redirects for SPA
 [[redirects]]

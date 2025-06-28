@@ -208,36 +208,27 @@ exports.handler = async (event, context) => {
       message: error.message,
       code: error.code,
       command: error.command,
-      stack: error.stack,
-      timestamp: new Date().toISOString()
+      stack: error.stack
     })
     
     let errorMessage = 'Failed to send message. Please try again later.'
-    let statusCode = 500
     
-    // Specific error messages with better categorization
-    if (error.code === 'EAUTH' || error.message.includes('Invalid login')) {
-      errorMessage = 'Email authentication failed. Please contact me directly at hardikcp5@gmail.com'
-      statusCode = 503
-    } else if (error.code === 'ECONNECTION' || error.message.includes('timeout')) {
-      errorMessage = 'Email service temporarily unavailable. Please try again in a few minutes.'
-      statusCode = 503
-    } else if (error.message.includes('Invalid JSON')) {
-      errorMessage = 'Invalid request format. Please refresh the page and try again.'
-      statusCode = 400
-    } else if (error.message.includes('Email service temporarily unavailable')) {
-      errorMessage = error.message
-      statusCode = 503
+    // Specific error messages
+    if (error.code === 'EAUTH') {
+      errorMessage = 'Email authentication failed. Please contact the site administrator.'
+    } else if (error.code === 'ECONNECTION') {
+      errorMessage = 'Could not connect to email server. Please try again later.'
+    } else if (error.message.includes('Invalid login')) {
+      errorMessage = 'Email service configuration error. Please contact the site administrator.'
     }
     
     return {
-      statusCode: statusCode,
+      statusCode: 500,
       headers,
       body: JSON.stringify({
         success: false,
         message: errorMessage,
-        error_code: error.code || 'UNKNOWN',
-        timestamp: new Date().toISOString()
+        debug: process.env.NODE_ENV === 'development' ? error.message : undefined
       })
     }
   }
