@@ -47,19 +47,19 @@ exports.handler = async (event, context) => {
       }
     }
 
-    // Create SMTP transporter
+    // Create SMTP transporter with better error handling
     const transporter = nodemailer.createTransporter({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      service: 'gmail', // Use service instead of manual config
       auth: {
         user: 'hardikcp5@gmail.com',
         pass: 'byjh tbif gxgs hvru'
-      },
-      tls: {
-        rejectUnauthorized: false
       }
     })
+
+    // Test the connection first
+    console.log('Testing SMTP connection...')
+    await transporter.verify()
+    console.log('SMTP connection successful!')
 
     // Email template
     const emailTemplate = `
@@ -111,6 +111,7 @@ exports.handler = async (event, context) => {
     `
 
     // Send email
+    console.log('Sending email...')
     await transporter.sendMail({
       from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
       to: 'hardikcp5@gmail.com',
@@ -118,6 +119,7 @@ exports.handler = async (event, context) => {
       html: emailTemplate,
       replyTo: email
     })
+    console.log('Email sent successfully!')
 
     // Send confirmation email to sender
     const confirmationTemplate = `
@@ -135,12 +137,14 @@ exports.handler = async (event, context) => {
     `
 
     try {
+      console.log('Sending confirmation email...')
       await transporter.sendMail({
         from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
         to: email,
         subject: 'Thank you for contacting me!',
         html: confirmationTemplate
       })
+      console.log('Confirmation email sent!')
     } catch (confirmError) {
       console.log('Confirmation email failed (non-critical):', confirmError.message)
     }
@@ -155,14 +159,31 @@ exports.handler = async (event, context) => {
     }
 
   } catch (error) {
-    console.error('Contact form error:', error)
+    console.error('Contact form error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      stack: error.stack
+    })
+    
+    let errorMessage = 'Failed to send message. Please try again later.'
+    
+    // Specific error messages
+    if (error.code === 'EAUTH') {
+      errorMessage = 'Email authentication failed. Please contact the site administrator.'
+    } else if (error.code === 'ECONNECTION') {
+      errorMessage = 'Could not connect to email server. Please try again later.'
+    } else if (error.message.includes('Invalid login')) {
+      errorMessage = 'Email service configuration error. Please contact the site administrator.'
+    }
     
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         success: false,
-        message: 'Failed to send message. Please try again later.'
+        message: errorMessage,
+        debug: process.env.NODE_ENV === 'development' ? error.message : undefined
       })
     }
   }
