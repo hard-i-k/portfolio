@@ -26,6 +26,30 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Check if nodemailer is available
+    if (!nodemailer || typeof nodemailer.createTransporter !== 'function') {
+      console.error('Nodemailer module issue:', {
+        nodemailerExists: !!nodemailer,
+        createTransporterType: typeof (nodemailer && nodemailer.createTransporter),
+        nodemailerKeys: nodemailer ? Object.keys(nodemailer) : 'undefined'
+      })
+      
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          message: 'Nodemailer dependency not available',
+          error: 'nodemailer.createTransporter is not a function',
+          details: {
+            timestamp: new Date().toISOString(),
+            errorType: 'TypeError',
+            nodemailerAvailable: !!nodemailer,
+            createTransporterType: typeof (nodemailer && nodemailer.createTransporter)
+          }
+        })
+      }
+    }
     // Create SMTP transporter
     const transporter = nodemailer.createTransporter({
       service: 'gmail',

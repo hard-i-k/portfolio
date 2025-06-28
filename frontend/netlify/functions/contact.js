@@ -26,6 +26,19 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Check if nodemailer is available
+    if (!nodemailer || typeof nodemailer.createTransporter !== 'function') {
+      console.error('Nodemailer not available or createTransporter is not a function')
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          message: 'Email service not configured. Please contact me directly at hardikcp5@gmail.com',
+          error: 'Nodemailer dependency issue'
+        })
+      }
+    }
     // Parse request body
     let parsedBody
     try {
