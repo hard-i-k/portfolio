@@ -17,6 +17,7 @@
   status = 200
 
 # Environment variables for Netlify functions
+# Note: Set GMAIL_APP_PASSWORD in Netlify dashboard for security
 [context.production.environment]
   GMAIL_USER = "hardikcp5@gmail.com"
   

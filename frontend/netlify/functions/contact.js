@@ -75,17 +75,23 @@ exports.handler = async (event, context) => {
 
     console.log('Creating SMTP transporter...')
     
-    // Create SMTP transporter with more robust configuration
+    // Create SMTP transporter with environment variables
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'hardikcp5@gmail.com',
-        pass: 'byjh tbif gxgs hvru'
+        user: process.env.GMAIL_USER || 'hardikcp5@gmail.com',
+        pass: process.env.GMAIL_APP_PASSWORD
       },
       tls: {
         rejectUnauthorized: false
       }
     })
+
+    // Check if required environment variables are set
+    if (!process.env.GMAIL_APP_PASSWORD) {
+      console.error('GMAIL_APP_PASSWORD environment variable not set')
+      throw new Error('Email service not properly configured. Please contact me directly at hardikcp5@gmail.com')
+    }
 
     // Test the connection with timeout
     console.log('Testing SMTP connection...')

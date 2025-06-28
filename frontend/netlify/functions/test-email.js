@@ -50,14 +50,28 @@ exports.handler = async (event, context) => {
         })
       }
     }
-    // Create SMTP transporter
+    // Create SMTP transporter with environment variables
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.GMAIL_USER || 'hardikcp5@gmail.com',
-        pass: process.env.GMAIL_APP_PASSWORD || 'byjh tbif gxgs hvru'
+        pass: process.env.GMAIL_APP_PASSWORD
       }
     })
+
+    // Check if required environment variables are set
+    if (!process.env.GMAIL_APP_PASSWORD) {
+      console.error('GMAIL_APP_PASSWORD environment variable not set')
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          message: 'Email service not configured - missing environment variables',
+          error: 'GMAIL_APP_PASSWORD not set'
+        })
+      }
+    }
 
     // Test the connection
     console.log('Testing SMTP connection...')
