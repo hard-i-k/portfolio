@@ -80,7 +80,7 @@ const Contact = () => {
       setIsSubmitting(false)
       
       // Handle different error types
-      let errorMessage = 'Failed to send message. Please try again or contact me directly at hardikcp59@gmail.com'
+      let errorMessage = 'Failed to send message. Please try again or contact me directly at hardikcp5@gmail.com'
       
       if (error.message.includes('fetch')) {
         errorMessage = 'Unable to connect to server. Please check your internet connection and try again.'
@@ -101,8 +101,8 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "hardikcp59@gmail.com",
-      link: "mailto:hardikcp59@gmail.com",
+      value: "hardikcp5@gmail.com",
+      link: "mailto:hardikcp5@gmail.com",
       color: "from-red-500 to-pink-500"
     },
     {
@@ -137,7 +137,7 @@ const Contact = () => {
     {
       icon: Mail,
       name: "Email",
-      url: "mailto:hardikcp59@gmail.com",
+      url: "mailto:hardikcp5@gmail.com",
       color: "hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400"
     }
   ]

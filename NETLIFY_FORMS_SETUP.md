@@ -35,7 +35,7 @@
 3. You'll see your "contact" form listed
 4. Click **Settings & Usage**
 5. Set up **Email notifications**:
-   - Add your email: `hardikcp59@gmail.com`
+   - Add your email: `hardikcp5@gmail.com`
    - Choose notification triggers
    - Customize email template
 

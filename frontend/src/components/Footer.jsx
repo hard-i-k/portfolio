@@ -28,7 +28,7 @@ const Footer = () => {
     },
     {
       name: 'Email',
-      href: 'mailto:hardikcp59@gmail.com',
+      href: 'mailto:hardikcp5@gmail.com',
       icon: Mail,
       color: 'hover:text-red-600 hover:bg-red-50'
     }
@@ -111,7 +111,7 @@ const Footer = () => {
             <div>
               <h4 className="text-lg font-semibold mb-6">Get In Touch</h4>
               <div className="space-y-3 text-gray-300">
-                <p>📧 hardikcp59@gmail.com</p>
+                <p>📧 hardikcp5@gmail.com</p>
                 <p>📱 +91 8273337228</p>
                 <p>📍 Vadodara, Gujarat</p>
                 <p>🕒 Available for opportunities</p>

@@ -51,7 +51,7 @@ exports.handler = async (event, context) => {
     const transporter = nodemailer.createTransporter({
       service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USER || 'hardikcp59@gmail.com',
+        user: process.env.GMAIL_USER || 'hardikcp5@gmail.com',
         pass: process.env.GMAIL_APP_PASSWORD || 'byjh tbif gxgs hvru'
       }
     })
@@ -113,8 +113,8 @@ exports.handler = async (event, context) => {
     // Send email
     console.log('Sending email...')
     await transporter.sendMail({
-      from: '"Hardik Kannoija Portfolio" <hardikcp59@gmail.com>',
-      to: 'hardikcp59@gmail.com',
+      from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
+      to: 'hardikcp5@gmail.com',
       subject: `Portfolio Contact: ${subject}`,
       html: emailTemplate,
       replyTo: email
@@ -139,7 +139,7 @@ exports.handler = async (event, context) => {
     try {
       console.log('Sending confirmation email...')
       await transporter.sendMail({
-        from: '"Hardik Kannoija Portfolio" <hardikcp59@gmail.com>',
+        from: '"Hardik Kannoija Portfolio" <hardikcp5@gmail.com>',
         to: email,
         subject: 'Thank you for contacting me!',
         html: confirmationTemplate

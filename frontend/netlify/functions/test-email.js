@@ -30,7 +30,7 @@ exports.handler = async (event, context) => {
     const transporter = nodemailer.createTransporter({
       service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USER || 'hardikcp59@gmail.com',
+        user: process.env.GMAIL_USER || 'hardikcp5@gmail.com',
         pass: process.env.GMAIL_APP_PASSWORD || 'byjh tbif gxgs hvru'
       }
     })
@@ -42,8 +42,8 @@ exports.handler = async (event, context) => {
 
     // Send a test email
     const testEmail = {
-      from: '"Portfolio Test" <hardikcp59@gmail.com>',
-      to: 'hardikcp59@gmail.com',
+      from: '"Portfolio Test" <hardikcp5@gmail.com>',
+      to: 'hardikcp5@gmail.com',
       subject: 'Test Email - Portfolio Contact Form',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -68,7 +68,7 @@ exports.handler = async (event, context) => {
         timestamp: new Date().toISOString(),
         config: {
           service: 'gmail',
-          user: process.env.GMAIL_USER || 'hardikcp59@gmail.com (fallback)',
+          user: process.env.GMAIL_USER || 'hardikcp5@gmail.com (fallback)',
           hasPassword: !!(process.env.GMAIL_APP_PASSWORD || 'byjh tbif gxgs hvru')
         }
       })

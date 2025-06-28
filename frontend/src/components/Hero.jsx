@@ -42,7 +42,7 @@ const Hero = () => {
       color: 'hover:text-blue-600 hover:bg-blue-50'
     },
     { 
-      href: 'mailto:hardikcp59@gmail.com', 
+      href: 'mailto:hardikcp5@gmail.com', 
       icon: Mail, 
       label: 'Email',
       color: 'hover:text-red-600 hover:bg-red-50'
