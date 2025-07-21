@@ -13,7 +13,7 @@ const Header = () => {
     
     try {
       // Test 1: Check if file exists
-      fetch('/resume/Hardik_Kannojia_Resume.pdf', { method: 'HEAD' })
+      fetch('/resume/HARDIK KANNOJIA_202351044_IIITV-GNR.pdf', { method: 'HEAD' })
         .then(response => {
           console.log('File check response:', response.status, response.statusText)
           if (response.ok) {
@@ -21,8 +21,8 @@ const Header = () => {
             
             // Simple and reliable download method
             const link = document.createElement('a')
-            link.href = '/resume/Hardik_Kannojia_Resume.pdf'
-            link.download = 'Hardik_Kannojia_Resume.pdf'
+            link.href = '/resume/HARDIK KANNOJIA_202351044_IIITV-GNR.pdf'
+            link.download = 'HARDIK KANNOJIA_202351044_IIITV-GNR.pdf'
             link.style.display = 'none'
             
             // Add to DOM, click, and remove
@@ -42,12 +42,12 @@ const Header = () => {
           console.error('File check failed:', error)
           // Fallback: open in new tab
           console.log('Trying fallback: open in new tab')
-          window.open('/resume/Hardik_Kannojia_Resume.pdf', '_blank')
+          window.open('/resume/HARDIK KANNOJIA_202351044_IIITV-GNR.pdf', '_blank')
         })
     } catch (error) {
       console.error('Download failed:', error)
       // Ultimate fallback
-      window.open('/resume/Hardik_Kannojia_Resume.pdf', '_blank')
+      window.open('/resume/HARDIK KANNOJIA_202351044_IIITV-GNR.pdf', '_blank')
     }
   }
 
@@ -132,8 +132,8 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-3">
             {/* Download Resume Button */}
             <a
-              href="/resume/Hardik_Kannojia_Resume.pdf"
-              download="Hardik_Kannojia_Resume.pdf"
+              href="/resume/HARDIK KANNOJIA_202351044_IIITV-GNR.pdf"
+              download="HARDIK KANNOJIA_202351044_IIITV-GNR.pdf"
               className="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-full text-sm font-medium hover:bg-primary-700 transition-all duration-200 shadow-md hover:shadow-lg"
             >
               <Download size={16} />
@@ -199,8 +199,8 @@ const Header = () => {
               
               {/* Mobile Download Resume Button */}
               <a
-                href="/resume/Hardik_Kannojia_Resume.pdf"
-                download="Hardik_Kannojia_Resume.pdf"
+                href="/resume/HARDIK KANNOJIA_202351044_IIITV-GNR.pdf"
+                download="HARDIK KANNOJIA_202351044_IIITV-GNR.pdf"
                 className="flex items-center space-x-3 px-4 py-3 bg-primary-600 text-white rounded-lg text-base font-medium hover:bg-primary-700 transition-all duration-200 w-full mt-4"
               >
                 <Download size={18} />
