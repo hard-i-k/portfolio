@@ -76,8 +76,8 @@ const Header = () => {
     { href: '#home', label: 'Home', icon: Home },
     { href: '#experience', label: 'Experience', icon: Briefcase },
     { href: '#about', label: 'About', icon: User },
-    { href: '#skills', label: 'Skills', icon: Code },
     { href: '#education', label: 'Education', icon: BookOpen },
+    { href: '#skills', label: 'Skills', icon: Code },
     { href: '#projects', label: 'Projects', icon: Briefcase },
     { href: '#contact', label: 'Contact', icon: Mail },
   ]
