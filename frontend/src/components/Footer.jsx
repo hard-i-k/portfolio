@@ -22,7 +22,7 @@ const Footer = () => {
     },
     {
       name: 'LinkedIn',
-      href: 'https://linkedin.com/in/hardik-kannoija-95b31629b',
+      href: 'https://www.linkedin.com/in/hardik-kannojia-95b31629b',
       icon: Linkedin,
       color: 'hover:text-blue-600 hover:bg-blue-50'
     },
