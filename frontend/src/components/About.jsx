@@ -66,28 +66,20 @@ const About = () => {
             {/* Content - Full Width */}
             <div className="space-y-6 sm:space-y-8">
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
-                B.Tech Student & Software Development Intern
+                B.Tech Computer Science Student & SDE Intern
               </h3>
-              
               <div className="space-y-4 text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                 <p>
-                  I'm Hardik Kannoija, currently pursuing B.Tech in Computer Science and Engineering 
-                  at the Indian Institute of Information Technology Vadodara. As a Software Development Intern 
-                  at DNote, I'm passionate about building innovative  applications.
+                  B.Tech Computer Science student at IIIT Vadodara with hands-on experience in full-stack development. Recently completed an SDE Internship at DNote (July 2025 – August 2025), where I engineered a custom collaborative note editor using React, BlockNote.js, Wasabi storage, and Supabase. This project streamlined workflows by 40% through rich text formatting, version control, seamless media handling, and real-time multi-user note sharing via unique links.
                 </p>
-                
                 <p>
-                  My expertise spans across the full stack - from React and Node.js on the frontend 
-                  to MongoDB and Express.js on the backend. I'm particularly interested in 
-                  modern development frameworks, and creating scalable web applications that solve 
-                  real-world problems.
+                  Recognized as one of the Top 5 performers among 25 interns and awarded a special recommendation letter for exceptional contribution and development impact at DNote.
                 </p>
-                
                 <p>
-                  Beyond academics, I served as General Secretary at IIITV Hostel from June 2024 to May 2025, managing operations 
-                  and student affairs. I'm actively involved in the tech community, participating in 
-                  hackathons, coding competitions, and contributing to collaborative projects that 
-                  push the boundaries of technology.
+                  Passionate about building scalable, user-centric solutions and contributing to innovative projects. My expertise covers the full stack—from React and Node.js to MongoDB and Express.js.
+                </p>
+                <p>
+                  Beyond academics, I served as General Secretary at IIITV Hostel (June 2024 – May 2025), managing operations and student affairs, and actively participate in hackathons, coding competitions, and open-source projects.
                 </p>
               </div>
             </div>
@@ -119,7 +111,7 @@ const About = () => {
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-4 text-lg sm:text-xl">Quick Facts</h4>
                   <ul className="space-y-3 text-sm sm:text-base text-gray-600 dark:text-gray-300">
                     <li>🎓 B.Tech CSE Student - IIIT Vadodara</li>
-                    <li>💻 Software Development Intern at DNote</li>
+                    <li>💻 SDE Intern – DNote (Jul 2025 – Aug 2025)</li>
                     <li>🏠 Ex-General Secretary - IIITV Hostel</li>
                     <li>📚 Full Stack Development Enthusiast</li>
                     <li>🎯 Problem Solver & Team Collaborator</li>

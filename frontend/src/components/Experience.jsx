@@ -1,4 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
+// Simple modal for image preview
+function ImageModal({ open, onClose, src, alt }) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70" onClick={onClose}>
+      <div className="relative max-w-full max-h-full p-2" onClick={e => e.stopPropagation()}>
+        <img src={src} alt={alt} className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-2xl border-2 border-white" />
+        <button onClick={onClose} className="absolute top-2 right-2 bg-white bg-opacity-80 rounded-full px-2 py-1 text-gray-800 font-bold text-lg shadow hover:bg-opacity-100 transition">&times;</button>
+      </div>
+    </div>
+  );
+}
 import { Briefcase, Calendar, MapPin, Users, Target, Award, ChevronRight } from 'lucide-react'
 
 const Experience = () => {
@@ -22,23 +34,32 @@ const Experience = () => {
     return () => observer.disconnect()
   }, [])
 
+  const [modal, setModal] = useState({ open: false, src: '', alt: '' });
+
   const experiences = [
     {
-      title: "Software Development Intern",
+      title: "SDE Intern",
       company: "DNote",
       location: "Remote",
-      period: "July 2025 – Present",
+      period: "July 2025 – August 2025",
       type: "Internship",
-      description: "Currently working as a Software Development Intern at DNote, contributing to the design and development of AI-powered software solutions and acquiring hands-on experience in modern development practices and agile workflows.",
+      description:
+        "Engineered a custom collaborative note editor using React, BlockNote.js, Wasabi storage for media, and Supabase—streamlining workflows by 40% through rich text formatting, version control, seamless media handling, and real-time multi-user note sharing via unique links. Stood out among 25 interns as one of the Top 5 performers and received a special recommendation letter from the company for exceptional contribution and development impact.",
       achievements: [
-        "Developing and implementing features for real-world applications with a focus on scalability and performance",
-        "Collaborating closely with cross-functional teams and mentors to deliver high-quality solutions",
-        "Participating in code reviews, daily stand-ups, and sprint planning sessions",
-        "Applying industry best practices in software architecture, testing, and deployment",
-        "Enhancing skills in modern development frameworks"
+        "Designed and implemented a collaborative note editor with real-time multi-user sharing and unique link generation",
+        "Integrated BlockNote.js for rich text formatting and version control",
+        "Leveraged Wasabi for efficient media storage and Supabase for backend and authentication",
+        "Streamlined team workflows by 40% through seamless media handling and robust versioning",
+        "Recognized as a Top 5 performer among 25 interns and awarded a special recommendation letter"
       ],
-      technologies: ["React", "JavaScript", "Node.js", "Git", "Agile Methodologies", "Express"],
-      current: true
+      technologies: ["React", "BlockNote.js", "Wasabi", "Supabase", "JavaScript", "Node.js"],
+      certificate: {
+        img: "/images/SDE_Intern_Certificate_DNote_HardikKannoija.png"
+      },
+      recommendation: {
+        img: "/images/SDE_Intern_Recommendation_DNote_HardikKannoija.png"
+      },
+      current: false
     },
     {
       title: "General Secretary – IIITV Hostel",
@@ -138,20 +159,46 @@ const Experience = () => {
                         {exp.description}
                       </p>
 
-                      {/* Achievements */}
-                      <div className="mb-6">
-                        <h4 className="flex items-center text-sm font-semibold text-gray-900 dark:text-white mb-4">
-                          <Target size={16} className="mr-2 text-accent-600 dark:text-accent-400" />
-                          Key Responsibilities & Achievements
-                        </h4>
-                        <div className="space-y-3">
-                          {exp.achievements.map((achievement, i) => (
-                            <div key={i} className="flex items-start">
-                              <ChevronRight size={16} className="mr-3 mt-0.5 text-primary-500 dark:text-primary-400 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{achievement}</span>
-                            </div>
-                          ))}
+                      {/* Achievements + Certificate/Recommendation Preview */}
+                      <div className="mb-6 flex flex-col lg:flex-row lg:items-start lg:gap-8">
+                        <div className="flex-1">
+                          <h4 className="flex items-center text-sm font-semibold text-gray-900 dark:text-white mb-4">
+                            <Target size={16} className="mr-2 text-accent-600 dark:text-accent-400" />
+                            Key Responsibilities & Achievements
+                          </h4>
+                          <div className="space-y-3">
+                            {exp.achievements.map((achievement, i) => (
+                              <div key={i} className="flex items-start">
+                                <ChevronRight size={16} className="mr-3 mt-0.5 text-primary-500 dark:text-primary-400 flex-shrink-0" />
+                                <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{achievement}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
+                        {/* Certificate & Recommendation Preview (right side) */}
+                        {exp.certificate && exp.recommendation && (
+                          <div className="mt-8 lg:mt-0 flex flex-row gap-4 items-start lg:items-start min-w-[160px] max-w-[200px] w-full">
+                            <div className="w-1/2 flex flex-col items-center">
+                              <img
+                                src={exp.certificate.img}
+                                alt="Internship Certificate Preview"
+                                className="rounded-md shadow border border-gray-200 dark:border-gray-700 transition-transform duration-300 group-hover:scale-105 w-[110px] h-[145px] object-cover cursor-pointer"
+                                onClick={() => setModal({ open: true, src: exp.certificate.img, alt: 'Internship Certificate' })}
+                              />
+                              <span className="block mt-1 text-[11px] text-center text-primary-700 dark:text-primary-300 font-semibold">Internship Certificate</span>
+                            </div>
+                            <div className="w-1/2 flex flex-col items-center">
+                              <img
+                                src={exp.recommendation.img}
+                                alt="Recommendation Letter Preview"
+                                className="rounded-md shadow border border-gray-200 dark:border-gray-700 transition-transform duration-300 group-hover:scale-105 w-[110px] h-[145px] object-cover cursor-pointer"
+                                onClick={() => setModal({ open: true, src: exp.recommendation.img, alt: 'Recommendation Letter' })}
+                              />
+                              <span className="block mt-1 text-[11px] text-center text-purple-700 dark:text-purple-300 font-semibold">Recommendation Letter</span>
+                            </div>
+                            <ImageModal open={modal.open} onClose={() => setModal({ open: false, src: '', alt: '' })} src={modal.src} alt={modal.alt} />
+                          </div>
+                        )}
                       </div>
 
                       {/* Technologies/Skills */}
@@ -159,7 +206,7 @@ const Experience = () => {
                         <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
                           Technologies & Skills
                         </h4>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 mb-4">
                           {exp.technologies.map((tech, i) => (
                             <span
                               key={i}
@@ -169,6 +216,7 @@ const Experience = () => {
                             </span>
                           ))}
                         </div>
+                        {/* ...existing code... */}
                       </div>
                     </div>
                   </div>

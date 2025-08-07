@@ -7,8 +7,9 @@ const Hero = () => {
   
   const roles = [
     'Full Stack Developer',
-    'React Developer', 
-    'Frontend Developer',
+    'React Developer',
+    'SDE Intern @ DNote',
+    'Collaborative App Builder',
     'Problem Solver',
     'Software Engineer'
   ]
@@ -87,9 +88,7 @@ const Hero = () => {
             </div>
 
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
-              B.Tech Computer Science student at IIIT Vadodara with hands-on experience in full-stack development. 
-              Currently working as a Software Development Intern at DNote, specializing in AI-powered applications 
-              and modern web technologies. Passionate about building scalable solutions and contributing to innovative projects.
+              B.Tech Computer Science student at IIIT Vadodara with hands-on experience in full-stack development. Recently completed an SDE Internship at DNote (July 2025 – August 2025), where I engineered a collaborative note editor using React, BlockNote.js, Wasabi storage, and Supabase—streamlining workflows by 40% with rich text formatting, version control, seamless media handling, and real-time multi-user note sharing. Recognized as a Top 5 performer among 25 interns and awarded a special recommendation letter for exceptional contribution and development impact. Passionate about building scalable, user-centric solutions and contributing to innovative projects.
             </p>
 
             {/* Action buttons */}

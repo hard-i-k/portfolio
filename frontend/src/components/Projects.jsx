@@ -79,7 +79,7 @@ const Projects = () => {
       technologies: ["Research", "Data Analysis", "Academic Writing", "Social Technology"],
       github: "#",
       live: "https://evincepub.com",
-      featured: true,
+      featured: false,
       stats: { stars: 0, forks: 0, views: 150 },
       date: "2024"
     },
@@ -134,7 +134,27 @@ const Projects = () => {
       featured: false,
       stats: { stars: 10, forks: 2, views: 150 },
       date: "2023"
-    }
+    },
+    // Profit Pilot project moved to the top for visibility
+    {
+      id: 8,
+      title: "Profit Pilot – ML-Powered Retail Dashboard",
+      description: "Smart dashboards for groceries and electronics to optimize pricing based on expiry, city demand, and product age. Achieved high accuracy in grocery price prediction, improving clearance rate by 30%. Deployed a depreciation model for electronics, helping sellers avoid late discounts. Enabled city-based dynamic pricing recommendations, boosting profit margins for sellers by 25%.",
+      details: [
+        "Built smart dashboards for groceries and electronics to optimize pricing based on expiry, city demand, and product age.",
+        "Achieved accuracy in grocery price prediction, improving clearance rate by 30%.",
+        "Deployed a depreciation model for electronics, helping sellers avoid late discounts.",
+        "Enabled city-based dynamic pricing recommendations, boosting profit margins for sellers by 25%."
+      ],
+      image: "/images/Profit_Pilot_Dashboard_screenshot.png",
+      category: "fullstack",
+      technologies: ["React", "Machine Learning", "Python", "Pandas", "Scikit-learn", "Flask", "Data Visualization"],
+      github: "https://github.com/hard-i-k/sparkathon2025_HackMonarchs",
+      live: "#",
+      featured: true,
+      stats: { stars: 0, forks: 0, views: 0 },
+      date: "2025"
+    },
   ]
 
   const featuredProjects = projects.filter(project => project.featured)
@@ -159,8 +179,8 @@ const Projects = () => {
           {/* Featured Projects */}
           <div className="mb-16">
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">Featured Projects</h3>
-            <div className="grid gap-8 lg:grid-cols-2">
-              {featuredProjects.slice(0, 2).map((project, index) => (
+            <div className="grid gap-6 md:gap-8 lg:grid-cols-3">
+              {featuredProjects.slice(0, 3).map((project, index) => (
                 <div
                   key={project.id}
                   className={`group bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-2xl dark:hover:shadow-gray-900/30 transition-all duration-500 transform hover:-translate-y-2 ${
@@ -194,39 +214,36 @@ const Projects = () => {
                     </div>
                   </div>
 
-                  <div className="p-6 sm:p-8">
-                    <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3">{project.title}</h4>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-sm sm:text-base">{project.description}</p>
-                    
+                  <div className="p-4 sm:p-5 md:p-6 lg:p-6 xl:p-7">
+                    <h4 className="text-base sm:text-lg md:text-lg lg:text-xl font-bold text-gray-900 dark:text-white mb-2 md:mb-3">{project.title}</h4>
+                    <p className="text-gray-600 dark:text-gray-300 mb-3 md:mb-4 leading-relaxed text-xs sm:text-sm md:text-sm lg:text-base">{project.description}</p>
                     {/* Detailed Features */}
                     {project.details && (
-                      <div className="mb-4">
-                        <ul className="space-y-2">
+                      <div className="mb-3 md:mb-4">
+                        <ul className="space-y-1 md:space-y-2">
                           {project.details.map((detail, idx) => (
-                            <li key={idx} className="flex items-start text-sm text-gray-600 dark:text-gray-300">
-                              <span className="inline-block w-2 h-2 bg-primary-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                            <li key={idx} className="flex items-start text-xs sm:text-sm md:text-sm text-gray-600 dark:text-gray-300">
+                              <span className="inline-block w-2 h-2 bg-primary-500 rounded-full mt-2 mr-2 md:mr-3 flex-shrink-0"></span>
                               <span className="leading-relaxed">{detail}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
-
                     {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="flex flex-wrap gap-1 md:gap-2 mb-4 md:mb-6">
                       {project.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2 sm:px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full text-xs sm:text-sm font-medium"
+                          className="px-2 sm:px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full text-xs sm:text-xs md:text-sm font-medium"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
-
                     {/* Stats */}
-                    <div className="flex items-center justify-between mb-6 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      <div className="flex items-center space-x-4">
+                    <div className="flex items-center justify-between mb-4 md:mb-6 text-xs sm:text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center space-x-2 md:space-x-4">
                         <div className="flex items-center">
                           <Star size={16} className="mr-1" />
                           <span>{project.stats.stars}</span>
@@ -241,7 +258,6 @@ const Projects = () => {
                         </div>
                       </div>
                     </div>
-
                     {/* Action buttons */}
                     <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                       <a
@@ -253,15 +269,18 @@ const Projects = () => {
                         <Github size={18} />
                         <span>Code</span>
                       </a>
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center space-x-2 px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200"
-                      >
-                        <ExternalLink size={18} />
-                        <span>Live Demo</span>
-                      </a>
+                      {/* Only show Live Demo if not Profit Pilot */}
+                      {project.title !== "Profit Pilot – ML-Powered Retail Dashboard" && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center space-x-2 px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200"
+                        >
+                          <ExternalLink size={18} />
+                          <span>Live Demo</span>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
